@@ -51,8 +51,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -86,9 +86,11 @@ WSGI_APPLICATION = 'gallery.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://portfolio_l7ee_user:HHZdiPywbbdjzIHmoxuw79Tx3W4lRjlV@dpg-cdq8kcirrk09t4aod0p0-a/portfolio_l7ee',        
-        conn_max_age=600    )}
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
