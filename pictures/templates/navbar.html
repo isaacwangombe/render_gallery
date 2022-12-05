@@ -1,0 +1,20 @@
+{% load static %}
+
+<nav class="navbar navbar-inverse">
+    <a href="{% url 'gallery' %}"> <img class="navbar-logo" src="{% static 'images/logo.png' %}" alt="image alt text" /></a>
+
+    <!-- Adding a search form  -->
+    <div class=" nav-form col-sm-4 col-md-4 navbar-right">
+
+        <form class="navbar-form" role="search" action="{% url 'category' %}">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search by category" name="category">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><img class="icon" src="{% static '/images/search.png' %}" alt="image alt text" /></button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- search form end -->
+</nav>

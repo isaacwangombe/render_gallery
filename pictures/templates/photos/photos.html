@@ -1,0 +1,106 @@
+{%extends 'base.html'%} {% load static %} {% block content %} {{ block.super}}
+
+<div class="container-fluid">
+    <div class="dropdown show">
+        <a class=" button btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filter by location
+        </a>
+
+        <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+
+            {% for city in location%}
+            <a class="list-group-item " href="{% url 'location' %}?location={{city.city}}">
+                <li>{{city.city}} </li>
+            </a>{% endfor %}
+        </div>
+    </div>
+
+</div>
+<!-- Looping through news   -->
+{% for image in images %}
+<div class=" cont col-xs-12 col-sm-6  col-md-6  col-lg-4 ">
+    <div>
+        <div data-toggle="modal" data-target="#{{image.id}}">
+            <div class="hover hover-4 text-white rounded"><img src="{{image.image.url}}" alt="">
+                <div class="hover-overlay"></div>
+                <div class="hover-4-content">
+                    <h3 class="hover-4-title text-uppercase font-weight-bold mb-0">{{image.title}}</h3>
+                    <p class="hover-4-description text-uppercase mb-0 small">{{image.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cat list-inline ">
+        Categories: {% for category in image.category.all %}
+        <li class="button list-inline-item">{{ category }}</li>{% endfor %}
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="modal-content">
+            <button type="button" class="close" style="height: 20px;" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">{{image.title}}</h5>
+            </div>
+            <div class="modal-body">
+                <img class="modal-img" src="{{image.image.url}}" alt="">
+                <p class="modal-description">{{image.description}}</p>
+            </div>
+            <div class="modal-footer">
+
+                <ul class="list-inline list-unstyled">
+                    <input type="text" value="{{image.image.url}}" id="myInput">
+                    <button class="btn" onclick="myFunction()">Copy Link</button>
+                    <li class="list-inline-item "><img class="icon" src="{% static '/images/cat.png' %}"
+                            alt="image alt text" />{% for category in image.category.all %}{{ category }} {% endfor %}
+                    </li>
+                    <li class="list-inline-item "><img class="icon" src="{% static '/images/loc.png' %}"
+                            alt="image alt text" />{{image.location}} </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+
+{% endfor %}
+
+<script>
+    function myFunction() {
+        /* Get the text field */
+        var copyText = document.getElementById("myInput");
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+        /* Copy the text inside the text field */
+        navigator.clipboard.writeText(copyText.value);
+
+        /* Alert the copied text */
+        alert("Copied the text: " + copyText.value);
+    }
+</script>
+
+
+
+{% endblock%}
